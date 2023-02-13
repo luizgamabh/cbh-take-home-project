@@ -1,4 +1,4 @@
-const { isString } = require('./generateHash');
+const { isString } = require('./isString');
 
 describe('isString', () => {
   it('Should return true for a string param', () => {
