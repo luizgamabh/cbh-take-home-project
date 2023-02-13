@@ -1,28 +1,34 @@
-const crypto = require("crypto");
+const { isString, generateHash } = require("./utils");
+const { TRIVIAL_PARTITION_KEY, MAX_PARTITION_KEY_LENGTH } = require('./dpk.constants');
 
+/**
+ * Returns a deterministic partition key for the given event
+ * 
+ * @param event
+ * @returns {string}
+ */
 exports.deterministicPartitionKey = (event) => {
-  const TRIVIAL_PARTITION_KEY = "0";
-  const MAX_PARTITION_KEY_LENGTH = 256;
-  let candidate;
+  // As default, candidate will be the trivial partition key
+  // If no event is provided, will return it
+  let candidate = TRIVIAL_PARTITION_KEY;
 
   if (event) {
-    if (event.partitionKey) {
-      candidate = event.partitionKey;
-    } else {
-      const data = JSON.stringify(event);
-      candidate = crypto.createHash("sha3-512").update(data).digest("hex");
-    }
+    // If an event is provided, will try to get the partition key from it
+    const { partitionKey } = event
+    // If the event has a partition key, will use that
+    // Otherwise, will use a hash of the event
+    candidate = partitionKey || generateHash(JSON.stringify(event));
   }
 
-  if (candidate) {
-    if (typeof candidate !== "string") {
-      candidate = JSON.stringify(candidate);
-    }
-  } else {
-    candidate = TRIVIAL_PARTITION_KEY;
+  if (!isString(candidate)) {
+    // If the candidate is not a string, will stringify it
+    candidate = JSON.stringify(candidate);
   }
+
   if (candidate.length > MAX_PARTITION_KEY_LENGTH) {
-    candidate = crypto.createHash("sha3-512").update(candidate).digest("hex");
+    // If the candidate is too long, will hash it
+    candidate = generateHash(candidate);
   }
+
   return candidate;
 };
