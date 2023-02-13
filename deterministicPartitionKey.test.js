@@ -1,7 +1,7 @@
-const { deterministicPartitionKey } = require("./dpk");
+const { deterministicPartitionKey } = require('./deterministicPartitionKey');
 
-describe("deterministicPartitionKey", () => {
-  it("Returns the literal '0' when given no input", () => {
+describe('deterministicPartitionKey', () => {
+  it('Returns the literal "0" when given no input', () => {
     const trivialKey = deterministicPartitionKey();
     const expected = '0';
     expect(trivialKey).toBe(expected);

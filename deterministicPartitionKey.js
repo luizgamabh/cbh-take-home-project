@@ -1,5 +1,6 @@
-const { isString, generateHash } = require("./utils");
-const { TRIVIAL_PARTITION_KEY, MAX_PARTITION_KEY_LENGTH } = require('./dpk.constants');
+const { isString } = require('./utils/isString');
+const { generateHash } = require('./utils/generateHash');
+const { TRIVIAL_PARTITION_KEY, MAX_PARTITION_KEY_LENGTH } = require('./deterministicPartitionKey.constants');
 
 /**
  * Returns a deterministic partition key for the given event
