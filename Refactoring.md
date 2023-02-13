@@ -9,3 +9,13 @@ You've been asked to refactor the function `deterministicPartitionKey` in [`dpk.
 You will be graded on the exhaustiveness and quality of your unit tests, the depth of your refactor, and the level of insight into your thought process provided by the written explanation.
 
 ## Your Explanation Here
+
+- [x] Extracted helper functions 
+  > `isString` and `generateHash` functions are not isolated to improve readability and make it easier to understand the purpose of each part of the function. They are now reusable.
+  > PS.: In more complex projects we could have a separate file for each helper function, with as much abstraction as possible.
+- [x] Simplified control flow
+  > The control flow is not simpler, by using default initial value of candidate. unnecessary nested if statements were eliminated. 
+- [x] Improved variable names
+  > I changed the name of the candidate variable from a noun to a verb (calculatePartitionKey) to better reflect its purpose, and also used more descriptive variable names for TRIVIAL_PARTITION_KEY and MAX_PARTITION_KEY_LENGTH.
+- [x] deterministicPartitionKey function is more readable
+  > The isolation of helper functions and constants makes the `deterministicPartitionKey` function cleaner and clearer.
